@@ -48,7 +48,7 @@ const CodeMirror = createReactClass({
 	},
 	componentDidMount () {
 		const codeMirrorInstance = this.getCodeMirrorInstance();
-		this.codeMirror = codeMirrorInstance.fromTextArea(this.textareaNode, this.props.options);
+		this.codeMirror = codeMirrorInstance(cm => this.ref.appendChild(cm), this.props.options);
 		this.codeMirror.on('change', this.codemirrorValueChanged);
 		this.codeMirror.on('cursorActivity', this.cursorActivity);
 		this.codeMirror.on('focus', this.focusChanged.bind(this, true));
@@ -57,9 +57,8 @@ const CodeMirror = createReactClass({
 		this.codeMirror.setValue(this.props.defaultValue || this.props.value || '');
 	},
 	componentWillUnmount () {
-		// is there a lighter-weight way to remove the cm instance?
 		if (this.codeMirror) {
-			this.codeMirror.toTextArea();
+			this.ref.removeChild(this.codeMirror.getWrapperElement());
 		}
 	},
 	componentWillReceiveProps: function (nextProps) {
@@ -118,15 +117,10 @@ const CodeMirror = createReactClass({
 			this.props.className
 		);
 		return (
-			<div className={editorClassName}>
-				<textarea
-					ref={ref => this.textareaNode = ref}
-					name={this.props.name || this.props.path}
-					defaultValue={this.props.value}
-					autoComplete="off"
-					autoFocus={this.props.autoFocus}
+			<div
+				className={editorClassName}
+				ref={ref => _this.ref = ref}
 				/>
-			</div>
 		);
 	},
 });
