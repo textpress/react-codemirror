@@ -13521,11 +13521,11 @@ var CodeMirror = createReactClass({
 		}
 	},
 	componentDidMount: function componentDidMount() {
-		var _this2 = this;
+		var _this = this;
 
 		var codeMirrorInstance = this.getCodeMirrorInstance();
 		this.codeMirror = codeMirrorInstance(function (cm) {
-			return _this2.ref.appendChild(cm);
+			return _this.ref.appendChild(cm);
 		}, this.props.options);
 		this.codeMirror.on('change', this.codemirrorValueChanged);
 		this.codeMirror.on('cursorActivity', this.cursorActivity);
@@ -13589,11 +13589,13 @@ var CodeMirror = createReactClass({
 		}
 	},
 	render: function render() {
+		var _this2 = this;
+
 		var editorClassName = className('ReactCodeMirror', this.state.isFocused ? 'ReactCodeMirror--focused' : null, this.props.className);
 		return React.createElement('div', {
 			className: editorClassName,
 			ref: function (ref) {
-				return _this.ref = ref;
+				return _this2.ref = ref;
 			}
 		});
 	}

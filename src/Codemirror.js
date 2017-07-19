@@ -117,7 +117,7 @@ const CodeMirror = createReactClass({
 		return (
 			<div
 				className={editorClassName}
-				ref={ref => _this.ref = ref}
+				ref={ref => this.ref = ref}
 				/>
 		);
 	},
