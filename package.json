@@ -1,17 +1,17 @@
 {
-  "name": "react-codemirror",
-  "version": "1.0.0",
-  "description": "Codemirror",
+  "name": "@textpress/react-codemirror",
+  "version": "1.0.1",
+  "description": "React wrapper for CodeMirror",
   "main": "lib/Codemirror.js",
-  "author": "Jed Watson",
+  "author": "Textpress",
   "license": "MIT",
-  "homepage": "https://github.com/JedWatson/react-codemirror",
+  "homepage": "https://github.com/textpress/react-codemirror",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JedWatson/react-codemirror.git"
+    "url": "https://github.com/textpress/react-codemirror.git"
   },
   "bugs": {
-    "url": "https://github.com/JedWatson/react-codemirror/issues"
+    "url": "https://github.com/textpress/react-codemirror/issues"
   },
   "dependencies": {
     "classnames": "^2.2.5",
