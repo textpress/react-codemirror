@@ -53,10 +53,15 @@ const CodeMirror = createReactClass({
 		this.codeMirror.on('blur', this.focusChanged.bind(this, false));
 		this.codeMirror.on('scroll', this.scrollChanged);
 		this.codeMirror.setValue(this.props.defaultValue || this.props.value || '');
+		this.resizeElement.data = 'about:blank';
 	},
 	componentWillUnmount () {
 		if (this.codeMirror) {
 			this.ref.removeChild(this.codeMirror.getWrapperElement());
+		}
+
+		if (this.resizeTarget) {
+			this.resizeTarget.removeEventListener('resize', this.handleResize);
 		}
 	},
 	componentWillReceiveProps: function (nextProps) {
@@ -108,6 +113,15 @@ const CodeMirror = createReactClass({
 			this.props.onChange(doc.getValue(), change);
 		}
 	},
+	resizeElementLoaded ( event ) {
+		this.resizeTarget = event.target.contentDocument.defaultView;
+        this.resizeTarget.addEventListener('resize', this.handleResize);
+	},
+	handleResize () {
+		if (this.codeMirror) {
+			this.codeMirror.refresh();
+		}
+	},
 	render () {
 		const editorClassName = className(
 			'ReactCodeMirror',
@@ -117,8 +131,19 @@ const CodeMirror = createReactClass({
 		return (
 			<div
 				className={editorClassName}
+				style={ { position: 'relative' } }
 				ref={ref => this.ref = ref}
-				/>
+				>
+				<object
+					type='text/html'
+					style={ { display: 'block', position: 'absolute',
+					  	top: 0, left: 0, height: '100%', width: '100%',
+					  	overflow: 'hidden', pointerEvents: 'none', zIndex: -1,
+				  		} }
+					ref={ref => this.resizeElement = ref}
+					onLoad={ this.resizeElementLoaded }
+					/>
+			</div>
 		);
 	},
 });
